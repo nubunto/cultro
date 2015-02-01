@@ -1,5 +1,4 @@
 var cultro = require('./cultro');
-
 var equal = function (a, b) {
     var aType = cultro.type(a);
     var bType = cultro.type(b);
@@ -13,13 +12,12 @@ var equal = function (a, b) {
     }
     if(aType === 'Object') {
         for(var key in a) {
-            if(a[key] != b[key] || !(key in b)) return false;
+            if(a[key] != b[key]) return false;
         }
         return true;
     }
     return a === b;
 }
-
 //custom log function:
 // with one argument, just print it
 // with 3 arguments, print the msg, the expected, the actual, and if they really match.
@@ -97,3 +95,10 @@ var multipleContexts = cultro([
 log('must be [foobar, foobaz]', ['foobar', 'foobaz'], multipleContexts());
 log('must be 6', 6, multipleContexts(0, 2))
 log('must be 5', 5, multipleContexts(1, 2, 2))
+
+//everything should work from here up
+
+var testingTypes = cultro([
+	'string', 'number', function (string, number) { return [typeof string, typeof number]  }
+]);
+log('must be ["string", "number"]', ["string", "number"], testingTypes('string', 10) );

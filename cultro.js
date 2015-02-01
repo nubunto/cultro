@@ -9,12 +9,12 @@
     //get a fresh array copy of the argument
     var slice = function (s) { return Array.prototype.slice.call(s); };
     
-    //the cultro function, takes callbacks (could be an array of object) and the optional context
+    //the cultro function, takes callbacks and the optional context
     function cultro(callbacks, context) {
         //get the type for hacking
         var callbacksType = cultro.type(callbacks);
         return function () {
-            //arguments length, callback (if is a object) and the remaining args (for partial application)
+            //arguments length and the remaining args (for partial application)
             var argsLength = arguments.length,
                 args = cultro.slice(arguments); //performance critical code should not use this
             
@@ -24,7 +24,7 @@
                 //return the results of the functions that match the argument length criteria.
                 var ret = callbacks
                     .filter(function (fn) {
-                        return type(fn) === 'Array' ? fn[0].length === argsLength : fn.length === argsLength;
+                        return type(fn) === 'Array' ? fn[0].length === argsLength : fn.length === argsLength; //handling custom context
                     })
                     .map(function (fn) {
                         return type(fn) === 'Array' ? fn[0].apply(fn[1] || null, args) : fn.apply(context, args);
