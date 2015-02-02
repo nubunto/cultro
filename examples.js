@@ -96,9 +96,3 @@ log('must be [foobar, foobaz]', ['foobar', 'foobaz'], multipleContexts());
 log('must be 6', 6, multipleContexts(0, 2))
 log('must be 5', 5, multipleContexts(1, 2, 2))
 
-//everything should work from here up
-
-var testingTypes = cultro([
-	'string', 'number', function (string, number) { return [typeof string, typeof number]  }
-]);
-log('must be ["string", "number"]', ["string", "number"], testingTypes('string', 10) );
